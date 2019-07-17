@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 set(ME_AUTOCONF_SCRIPT ${CMAKE_CURRENT_LIST_FILE})
 
 function(me_autoconf)
-    set(X_OPTIONS FORCE)
+    set(X_OPTIONS FORCE LIBTOOL)
     set(X_SINGLES SOURCE_DIR)
     set(X_MULTIS ENV FLAGS DEPENDS)
     cmake_parse_arguments(X "${X_OPTIONS}" "${X_SINGLES}" "${X_MULTIS}" ${ARGN})
@@ -39,6 +39,7 @@ function(me_autoconf)
         -D "PROJECT=${ME_PROJECT}"
         -D "ENVIRONMENTS=${X_ENV}"
         -D "PROGRAM=${AUTORECONF}"
+        -D "LIBTOOL=${X_LIBTOOL}"
         -D "FLAGS=${X_FLAGS}"
         -D "BUILD_DIR=${CMAKE_CURRENT_BINARY_DIR}"
         -P "${ME_AUTOCONF_SCRIPT}"
@@ -75,6 +76,13 @@ if(x$ENV{DEBUG}$ENV{VERBOSE} STREQUAL x)
         "${ERROR_MESSAGE}" "\n"
         "STDERR: ${BUILD_DIR}/autoconf-error.txt"
     )
+endif()
+
+if(LIBTOOL)
+    execute_process(COMMAND "$ENV{LIBTOOLIZE}" -icf ${OUTPUT_REDIRECT} RESULT_VARIABLE error)
+    if(error)
+        message(FATAL_ERROR "${ERROR_MESSAGE}")
+    endif()
 endif()
 
 execute_process(COMMAND "${PROGRAM}" ${FLAGS} ${OUTPUT_REDIRECT} RESULT_VARIABLE error)
