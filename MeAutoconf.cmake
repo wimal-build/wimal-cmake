@@ -9,7 +9,7 @@ function(me_autoconf)
     cmake_parse_arguments(X "${X_OPTIONS}" "${X_SINGLES}" "${X_MULTIS}" ${ARGN})
 
     if(NOT X_SOURCE_DIR)
-        set(X_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/sources)
+        set(X_SOURCE_DIR ${ME_SOURCE_DIR})
     endif()
 
     if(NOT X_FLAGS)

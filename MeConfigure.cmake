@@ -37,7 +37,7 @@ function(me_configure)
     endif()
 
     if(NOT X_FILE)
-        set(X_FILE "${CMAKE_CURRENT_SOURCE_DIR}/sources/configure")
+        set(X_FILE "${ME_SOURCE_DIR}/configure")
     endif()
     if(NOT X_OUTPUT)
         set(X_OUTPUT ${X_BUILD_DIR}/Makefile)

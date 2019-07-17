@@ -32,7 +32,7 @@ function(me_cmake)
     endif()
 
     if(NOT X_SOURCE_DIR)
-        set(X_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/sources)
+        set(X_SOURCE_DIR ${ME_SOURCE_DIR})
     endif()
 
     if(NOT X_BUILD_DIR)

@@ -33,13 +33,16 @@ foreach(binary ${binaries})
         continue()
     endif()
     message(STATUS "Strip: ${file}")
+    if(x$ENV{NO_DBG} STREQUAL x)
+        execute_process(
+            COMMAND ${OBJCOPY} --only-keep-debug ${file} "${PREFIX}/dbg/${binary}.dbg"
+            ERROR_QUIET
+        )
+    endif()
     execute_process(
-        COMMAND ${OBJCOPY} --only-keep-debug ${file} "${PREFIX}/dbg/${binary}.dbg"
+        COMMAND ${OBJCOPY} --strip-all ${file} ERROR_QUIET
     )
     execute_process(
-        COMMAND ${OBJCOPY} --strip-all ${file}
-    )
-    execute_process(
-        COMMAND ${OBJCOPY} --remove-section .gnu_debuglink ${file}
+        COMMAND ${OBJCOPY} --remove-section .gnu_debuglink ${file} ERROR_QUIET
     )
 endforeach()
