@@ -162,6 +162,8 @@ set(CMAKE_FIND_ROOT_PATH "${ME_SYSROOT}" CACHE PATH CMAKE_FIND_ROOT_PATH)
 # See: https://www.unix.com/man-page/osx/1/ld/
 if(WIMAL_TARGET MATCHES "-android")
     set(EXTRA_CFLAGS "-fvisibility=hidden")
+elseif(WIMAL_TARGET MATCHES "-macos")
+    set(EXTRA_CFLAGS "-mmacosx-version-min=10.10")
 endif()
 
 if(NOT CMAKE_BUILD_TYPE)
