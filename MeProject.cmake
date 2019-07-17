@@ -206,6 +206,7 @@ function(me_project_3rd project)
                 DESTINATION ${CMAKE_INSTALL_PREFIX}
                 USE_SOURCE_PERMISSIONS
                 COMPONENT ${ME_PROJECT}
+                PATTERN "__pycache__" EXCLUDE
             )
             me_install_target(${ME_PROJECT})
         endif()
