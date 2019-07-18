@@ -22,6 +22,7 @@ function(me_cmake)
         NO_RPATH
         NO_PREFIX
         NO_SYSROOT
+        NO_GENERATOR
     )
     set(X_SINGLES SOURCE_DIR BUILD_DIR)
     set(X_MULTIS ENV FLAGS DEPENDS CCFLAGS CFLAGS CXXFLAGS)
@@ -116,7 +117,13 @@ function(me_cmake)
         list(APPEND X_FLAGS "-DCMAKE_OSX_SYSROOT=${ME_SYSROOT}")
         list(APPEND X_FLAGS "-DCMAKE_FIND_ROOT_PATH=${ME_SYSROOT}")
     endif()
-    list(APPEND X_FLAGS "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}" "-G${CMAKE_GENERATOR}")
+    if(NOT X_NO_GENERATOR)
+        list(APPEND X_FLAGS "-G${CMAKE_GENERATOR}")
+    else()
+        set(CMAKE_MAKE_PROGRAM make PARENT_SCOPE)
+    endif()
+
+    list(APPEND X_FLAGS "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 
     add_custom_command(
         OUTPUT ${X_BUILD_DIR}/Makefile
