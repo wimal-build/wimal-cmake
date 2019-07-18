@@ -156,6 +156,7 @@ endif()
 set(ME_SYSROOT "${WIMAL_HOME}/sysroot/${WIMAL_TARGET}" CACHE PATH ME_SYSROOT)
 set(CMAKE_OSX_SYSROOT "${ME_SYSROOT}" CACHE PATH CMAKE_OSX_SYSROOT)
 set(CMAKE_FIND_ROOT_PATH "${ME_SYSROOT}" CACHE PATH CMAKE_FIND_ROOT_PATH)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH ON CACHE BOOL CMAKE_BUILD_WITH_INSTALL_RPATH)
 
 # When a darwin shared library is linked with the `-exported_symbols_list` flag, all unlisted
 # symbols will be treated as if they were marked as visibility=hidden.
@@ -163,7 +164,7 @@ set(CMAKE_FIND_ROOT_PATH "${ME_SYSROOT}" CACHE PATH CMAKE_FIND_ROOT_PATH)
 if(WIMAL_TARGET MATCHES "-android")
     set(EXTRA_CFLAGS "-fvisibility=hidden")
 elseif(WIMAL_TARGET MATCHES "-macos")
-    set(EXTRA_CFLAGS "-mmacosx-version-min=10.10")
+    set(CMAKE_SYSTEM_VERSION "10.10" CACHE STRING CMAKE_SYSTEM_VERSION)
 endif()
 
 if(NOT CMAKE_BUILD_TYPE)
