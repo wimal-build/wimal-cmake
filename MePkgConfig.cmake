@@ -4,17 +4,19 @@ function(me_package_config)
     if(CMAKE_SCRIPT_MODE_FILE)
         return()
     endif()
+    file(REMOVE "${CMAKE_BINARY_DIR}/pc/pkg-config")
+    file(REMOVE "${CMAKE_BINARY_DIR}/pkg-config")
     find_package(PkgConfig)
     if(NOT PKG_CONFIG_FOUND)
         message(FATAL_ERROR "No pkg-config found")
     endif()
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/pc")
     file(
-        WRITE "${CMAKE_BINARY_DIR}/pkg-config.in"
+        WRITE "${CMAKE_BINARY_DIR}/pc/pkg-config"
         "[ \"\$PACKAGE_CONFIG_SHARED\" = \"\" ] && ARGS=--static\n"
         "${PKG_CONFIG_EXECUTABLE} \$ARGS \$@"
 
     )
-    configure_file("${CMAKE_BINARY_DIR}/pkg-config.in" "${CMAKE_BINARY_DIR}/pc/pkg-config" @ONLY)
     file(
         COPY "${CMAKE_BINARY_DIR}/pc/pkg-config"
         DESTINATION "${CMAKE_BINARY_DIR}"
