@@ -12,12 +12,9 @@ function(me_install_toolchain)
     file(MAKE_DIRECTORY "${CACHE_DIR}")
     # Fetch latest release.
     set(RELEASE_URL https://github.com/wimal-build/wimal/releases)
-    message(STATUS "Fetching ${RELEASE_URL}/latest")
-    file(
-        DOWNLOAD
-        "${RELEASE_URL}/latest"
-        "${CACHE_DIR}/releases"
-    )
+    set(API_URL https://api.github.com/repos/wimal-build/wimal)
+    message(STATUS "Fetching ${API_URL}/releases/latest")
+    file(DOWNLOAD ${API_URL}/releases/latest ${CACHE_DIR}/releases)
     file(READ "${CACHE_DIR}/releases" releases)
     if(CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
         set(system linux)
