@@ -15,7 +15,17 @@ function(me_install_toolchain)
     set(RELEASE_URL https://github.com/wimal-build/wimal/releases)
     set(API_URL https://api.github.com/repos/wimal-build/wimal)
     message(STATUS "Fetching ${API_URL}/releases/latest")
-    file(DOWNLOAD ${API_URL}/releases/latest ${CACHE_DIR}/releases)
+    if(NOT "x$ENV{WIMAL_GITHUB_TOKEN}" STREQUAL x)
+        list(
+            APPEND WIMAL_GITHUB_HTTP_HEADER HTTPHEADER
+            "Authorization: Bearer $ENV{WIMAL_GITHUB_TOKEN}"
+        )
+        message(STATUS "Using GitHub Token")
+    endif()
+    file(
+        DOWNLOAD ${API_URL}/releases/latest ${CACHE_DIR}/releases
+        ${WIMAL_GITHUB_HTTP_HEADER}
+    )
     file(READ "${CACHE_DIR}/releases" releases)
     if(CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
         if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL x86_64)
