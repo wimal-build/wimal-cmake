@@ -101,17 +101,17 @@ a64-ios-distclean:
 	cmake -DTARGET=a64-ios -DBUILD_TYPE=Release -DDISTCLEAN=ON -P CMakeLists.txt
 a64-ios: a64-ios-debug a64-ios-release
 
-x64-ios-debug:
-	cmake -DTARGET=x64-ios -DBUILD_TYPE=Debug -P CMakeLists.txt
-x64-ios-release:
-	cmake -DTARGET=x64-ios -DBUILD_TYPE=Release -P CMakeLists.txt
-x64-ios-clean:
-	cmake -DTARGET=x64-ios -DBUILD_TYPE=Debug -DCLEAN=ON -P CMakeLists.txt
-	cmake -DTARGET=x64-ios -DBUILD_TYPE=Release -DCLEAN=ON -P CMakeLists.txt
-x64-ios-distclean:
-	cmake -DTARGET=x64-ios -DBUILD_TYPE=Debug -DDISTCLEAN=ON -P CMakeLists.txt
-	cmake -DTARGET=x64-ios -DBUILD_TYPE=Release -DDISTCLEAN=ON -P CMakeLists.txt
-x64-ios: x64-ios-debug x64-ios-release
+x64-sim-debug:
+	cmake -DTARGET=x64-sim -DBUILD_TYPE=Debug -P CMakeLists.txt
+x64-sim-release:
+	cmake -DTARGET=x64-sim -DBUILD_TYPE=Release -P CMakeLists.txt
+x64-sim-clean:
+	cmake -DTARGET=x64-sim -DBUILD_TYPE=Debug -DCLEAN=ON -P CMakeLists.txt
+	cmake -DTARGET=x64-sim -DBUILD_TYPE=Release -DCLEAN=ON -P CMakeLists.txt
+x64-sim-distclean:
+	cmake -DTARGET=x64-sim -DBUILD_TYPE=Debug -DDISTCLEAN=ON -P CMakeLists.txt
+	cmake -DTARGET=x64-sim -DBUILD_TYPE=Release -DDISTCLEAN=ON -P CMakeLists.txt
+x64-sim: x64-sim-debug x64-sim-release
 
 a64-sim-debug:
 	cmake -DTARGET=a64-sim -DBUILD_TYPE=Debug -P CMakeLists.txt
@@ -147,11 +147,11 @@ android-clean: arm-android-clean x86-android-clean a64-android-clean x64-android
 android-distclean: arm-android-distclean x86-android-distclean a64-android-distclean x64-android-distclean
 
 ios: a64-ios-debug
-ios-debug: arm-ios-debug a64-ios-debug x64-ios-debug a64-sim-debug
-ios-release: arm-ios-release a64-ios-release x64-ios-release a64-sim-release
+ios-debug: arm-ios-debug a64-ios-debug x64-sim-debug a64-sim-debug
+ios-release: arm-ios-release a64-ios-release x64-sim-release a64-sim-release
 ios-all: ios-debug ios-release
-ios-clean: arm-ios-clean a64-ios-clean x64-ios-clean a64-sim-clean
-ios-distclean: arm-ios-distclean a64-ios-distclean x64-ios-distclean a64-sim-distclean
+ios-clean: arm-ios-clean a64-ios-clean x64-sim-clean a64-sim-clean
+ios-distclean: arm-ios-distclean a64-ios-distclean x64-sim-distclean a64-sim-distclean
 
 all: linux-all macos-all android-all ios-all
 clean: linux-clean macos-clean android-clean ios-clean
